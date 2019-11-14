@@ -97,9 +97,9 @@ class PitchDetection {
             AlphaTabRunner.noteList.addNote(midiNum);
             AlphaTabRunner.drawer.updateNote(AlphaTabRunner.noteList.average);
         } else {
-            // Displays error message
             this.label.textContent = "No Pitch Detected";
 
+            // Sentinel value of 0 used for silence
             AlphaTabRunner.noteList.addNote(0);
             AlphaTabRunner.drawer.updateNote(AlphaTabRunner.noteList.average);
         }
