@@ -1,4 +1,4 @@
-const MAX_SIZE = 3;
+const MAX_SIZE = 5;
 
 class NoteList {
     constructor(element) {
@@ -19,7 +19,7 @@ class NoteList {
             this.pointer = (this.pointer + 1) % MAX_SIZE;
         }
         this.total += element;
-        this.average = Math.floor(this.total / this.elements.length);
+        this.average = Math.round(this.total / this.elements.length);
 
         if (
             element === 0 ||

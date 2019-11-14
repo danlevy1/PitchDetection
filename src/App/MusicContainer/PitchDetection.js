@@ -1,10 +1,13 @@
 import ml5 from "ml5";
+import p5 from "./sketch";
+import AlphaTabRunner from "./AlphaTabRunner";
 
 class PitchDetection {
     audioContext;
     micStream;
     pitchDetectionModel;
     label;
+    noteList;
 
     /**
      * Sets up pitch detection
@@ -58,13 +61,14 @@ class PitchDetection {
     static startPitchDetection() {
         // Run nested anonymous function every 1 ms
         return setInterval(() => {
+            p5.redraw();
             console.log("CALL");
             // Gets the current pitch and sends it to displayMidi
             this.pitchDetectionModel.getPitch().then(frequency => {
                 this.displayMidi(frequency);
             }).catch(err => {
                 console.log(`[error][PitchDetection] ${err}`);
-                this.displayMidi(-1);
+                this.displayMidi(0);
             });
         }, 1);
     }
@@ -74,6 +78,8 @@ class PitchDetection {
      * @param {number} setIntervalID The id of the setInterval process to stop
      */
     static stopPitchDetection(setIntervalID) {
+        //console.log("NO LOOP");
+        //p5.noLoop();
         clearInterval(setIntervalID);
     }
 
@@ -82,23 +88,20 @@ class PitchDetection {
      * @param {number} frequency The frequency to convert and display
      */
     static displayMidi(frequency) {
-        // TODO: I currently pass in a frequency >= 0 if there was no error, or -1 if there was an error
-        // TODO: I keep getting -Infinity which is an error here. Why is that? I think it should be 0 for silence.
-        if (frequency >= 0) {
+        if (frequency) {
             // Converts frequency to midi value
             let midiNum = (Math.log(frequency / 440) / Math.log(2)) * 12 + 69;
             
-            // Displays the frequency
-            this.label.textContent = frequency.toString();
-
-            // this.noteList.addNote(this.midiNum);
-            // this.drawer.updateNote(this.noteList.average);
+            this.label.textContent = midiNum;
+            
+            AlphaTabRunner.noteList.addNote(midiNum);
+            AlphaTabRunner.drawer.updateNote(AlphaTabRunner.noteList.average);
         } else {
             // Displays error message
-            this.label.textContent = "ERROR";
+            this.label.textContent = "No Pitch Detected";
 
-            // this.noteList.addNote(0);
-            // this.drawer.updateNote(this.noteList.average);
+            AlphaTabRunner.noteList.addNote(0);
+            AlphaTabRunner.drawer.updateNote(AlphaTabRunner.noteList.average);
         }
     }
 }

@@ -2,22 +2,38 @@ import p5 from "p5";
 
 const p5Sketch = p => {
     let barCursor;
-    let canDraw = false;
-    let canListen = false;
+    let alphaTabContainer;
     let drawer;
+    let canvas;
     const EXTRA_BAR_VARIANCE = 7;
     let circleSize = 10;
+    let noteList;
 
-    p.setup = function() {};
+    p.updateNoteList = function(midiNum) {
+        noteList.addNote(this.midiNum);
+    }
 
-    p.draw = function() {
-        if (!canDraw || !canListen) {
+    p.setup = function(drawerGiven, noteListGiven) {
+        if (drawerGiven === undefined || noteListGiven === undefined) {
+            p.noLoop();
             return;
         }
+        drawer = drawerGiven;
+        noteList = noteListGiven;
+        barCursor = document.getElementById("bC");
+        alphaTabContainer = document.getElementById("alpha-tab-container");
+        canvas = p.createCanvas(alphaTabContainer.clientWidth, alphaTabContainer.clientHeight);
+        const x = 0;
+        const y = 0;
+        canvas.position(x, y);
+        canvas.parent("sketch-holder");
+    };
+
+    p.draw = function() {       
         // sets the background color to grey
         //background(255, 255, 255, 1);
-        p.background(140);
-        //background(255);
+        p.background(245);
+        //p.background(255);
         // dont draw the outline of the shape, note: you need to turn stroke on to draw lines as we do below.
         p.noStroke();
 
@@ -25,6 +41,8 @@ const p5Sketch = p => {
         let sharpPos;
         if (drawer) {
             currentHeight = drawer.noteHeight;
+
+            console.log(drawer.note.midiVal);
 
             // fills with pink
             p.fill(255, 0, 255);
@@ -70,10 +88,10 @@ const p5Sketch = p => {
             }
 
             // fills with white
-            p.fill(255);
             // draws text
             //text(drawer.note.charPart + " " + drawer.note.octave, posX - 5, height / 2);
         }
+        p.fill(255);
     };
 };
 

@@ -18,3 +18,7 @@
     fill: #0078ff;
     stroke: #0078ff;
 }
+
+#sketch-holder {
+    position: relative;
+}
