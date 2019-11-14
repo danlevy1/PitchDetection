@@ -20,5 +20,6 @@
 }
 
 #sketch-holder {
+    /* Ensures that the absolute position of the p5 canvas draws at the correct spot */
     position: relative;
 }
