@@ -62,7 +62,7 @@ class PitchDetection {
         // Run nested anonymous function every 1 ms
         return setInterval(() => {
             p5.redraw();
-            console.log("CALL");
+
             // Gets the current pitch and sends it to displayMidi
             this.pitchDetectionModel.getPitch().then(frequency => {
                 this.displayMidi(frequency);

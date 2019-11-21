@@ -154,9 +154,11 @@ class MusicContainer extends Component {
     render() {
         return (
             <section>
-                <div id='sketch-holder'></div>
-                <div id='alpha-tab-container' data-tex='true'>
-                    {this.state.tex}
+                <div id='wrapper'>
+                    <div id='sketch-holder'></div>
+                    <div id='alpha-tab-container' data-tex='true'>
+                        {this.state.tex}
+                    </div>
                 </div>
                 <button onClick={this.playPauseHandler}>PLAY / PAUSE</button>
                 <button onClick={this.resumeAudioContextHandler}>RESUME</button>

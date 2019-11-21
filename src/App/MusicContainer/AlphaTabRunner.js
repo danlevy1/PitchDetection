@@ -30,7 +30,7 @@ class AlphaTabRunner {
             cursor: true,
             tracks: this.currentTracks,
             layout: "horizontal",
-            scrollElement: "#alpha-tab-container"
+            scrollElement: "#wrapper"
         };
 
         // Creates the AlphaTab API
